@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
-import type { AuthState, UserResponseDto } from "./types/auth.types"
+import type { AuthState, UserResponseDto } from "../shared/types/auth.types"
 
 interface AuthPayload {
   token: string

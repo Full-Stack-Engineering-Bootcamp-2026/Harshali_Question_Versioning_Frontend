@@ -1,26 +1,27 @@
-"use client"
-
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
-import { AppSidebar } from "./AppSidebar"
-import { Navbar } from "./Navbar"
+import { useState } from "react"
 import { Outlet } from "react-router-dom"
-import { requestNotificationPermission } from "@/firebase/notification"
-import { useEffect } from "react"
-export default function AppLayout() {
-  useEffect(() => {
-    requestNotificationPermission()
-  }, [])
+
+import Navbar from "./Navbar"
+import Sidebar from "./AppSidebar"
+
+type AppLayoutProps = {
+  role: "ADMIN" | "USER"
+}
+
+export default function AppLayout({ role }: AppLayoutProps) {
+  const [collapsed, setCollapsed] = useState(false)
+
   return (
-    <SidebarProvider>
-      <div className="flex h-screen w-screen overflow-hidden">
-        <AppSidebar />
-        <SidebarInset className="flex flex-1 flex-col">
-          <Navbar />
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-4">
-            <Outlet />
-          </main>
-        </SidebarInset>
+    <div className="flex min-h-screen bg-background">
+      <Sidebar role={role} collapsed={collapsed} setCollapsed={setCollapsed} />
+
+      <div className="flex flex-1 flex-col">
+        <Navbar role={role} />
+
+        <main className="flex-1 p-6">
+          <Outlet />
+        </main>
       </div>
-    </SidebarProvider>
+    </div>
   )
 }

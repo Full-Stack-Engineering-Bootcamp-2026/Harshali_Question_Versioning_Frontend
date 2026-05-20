@@ -1,31 +1,18 @@
-import { Navigate } from "react-router-dom"
-
+import { Navigate, Outlet } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import type { RootState } from "@/app/store"
 
-interface Props {
-  children: React.ReactNode
-}
-
-export default function PublicRoute({ children }: Props) {
+export default function PublicRoute() {
   const { token, user } = useSelector((state: RootState) => state.auth)
 
-  if (!token || !user) {
-    return children
+  if (token && user?.role === "ADMIN") {
+    return <Navigate to="/admin" replace />
   }
 
-  if (user.mustChangePassword) {
-    return <Navigate to="/force-reset-password" replace />
+  if (token && user?.role === "USER") {
+    return <Navigate to="/user" replace />
   }
 
-  if (user.role === "ADMIN") {
-    return <Navigate to="/admin/dashboard" replace />
-  }
-
-  if (user.role === "STAFF") {
-    return <Navigate to="/staff/dashboard" replace />
-  }
-
-  return <Navigate to="/dashboard/member" replace />
+  return <Outlet />
 }

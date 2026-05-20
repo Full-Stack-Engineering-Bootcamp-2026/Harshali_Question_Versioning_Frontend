@@ -1,20 +1,22 @@
-import { Navigate } from "react-router-dom"
-
+import { Navigate, Outlet } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 import type { RootState } from "@/app/store"
 
-interface Props {
-  children: React.ReactNode
+type ProtectedRouteProps = {
+  allowedRole: "ADMIN" | "USER"
 }
 
-export default function ProtectedRoute({ children }: Props) {
-  const token = useSelector((state: RootState) => state.auth.token)
+export default function ProtectedRoute({ allowedRole }: ProtectedRouteProps) {
+  const { token, user } = useSelector((state: RootState) => state.auth)
 
-  if (!token) {
-    return <Navigate to="/login" replace />
+  if (!token || !user) {
+    return <Navigate to="/" replace />
   }
 
-  return children
+  if (user.role !== allowedRole) {
+    return <Navigate to="/" replace />
+  }
+
+  return <Outlet />
 }
-//if token render children othrwise rendirect to login page

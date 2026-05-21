@@ -11,12 +11,14 @@ import CreateQuestion from "./features/admin/pages/CreateQuestion"
 import QuizzesList from "./features/admin/pages/QuizzesList"
 import CreateQuiz from "./features/admin/pages/CreateQuiz"
 import QuizDetails from "./features/admin/pages/QuizDetails"
+import RegisterPage from "./features/shared/Register"
+import QuizList from "./features/user/pages/QuizList"
 function App() {
   return (
     <Routes>
-      {/* PUBLIC */}
       <Route element={<PublicRoute />}>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRole="ADMIN" />}>
@@ -31,10 +33,10 @@ function App() {
         </Route>
       </Route>
 
-      {/* USER */}
       <Route element={<ProtectedRoute allowedRole="USER" />}>
         <Route path="/user" element={<AppLayout role="USER" />}>
           <Route index element={<div>User Dashboard</div>} />
+          <Route path="quizzes" element={<QuizList />} />
         </Route>
       </Route>
     </Routes>

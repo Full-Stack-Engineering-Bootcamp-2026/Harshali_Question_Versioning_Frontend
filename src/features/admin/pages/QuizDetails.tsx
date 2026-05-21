@@ -78,10 +78,6 @@ export default function QuizDetails() {
           </Button>
 
           <h2 className="text-2xl font-bold">{quiz.title}</h2>
-
-          <p className="text-sm text-muted-foreground">
-            {quiz.questions.length} questions mapped to this quiz
-          </p>
         </div>
 
         <Badge variant="outline">{quiz.questions.length} Questions</Badge>
@@ -92,13 +88,11 @@ export default function QuizDetails() {
           <Card key={question.questionVersionPublicId} className="rounded-2xl">
             <CardContent className="space-y-4 p-5">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="secondary">Question {index + 1}</Badge>
+                <Badge>Question {index + 1}</Badge>
 
                 <Badge>{question.answerType}</Badge>
 
-                <Badge variant="outline">
-                  Version {question.versionNumber}
-                </Badge>
+                <Badge>Version {question.versionNumber}</Badge>
               </div>
 
               <h3 className="text-lg font-semibold">{question.questionText}</h3>

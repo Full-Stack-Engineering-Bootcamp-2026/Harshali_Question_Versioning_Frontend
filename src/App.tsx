@@ -9,7 +9,7 @@ import PublicRoute from "./routes/PublicRoute"
 import QuestionsList from "./features/admin/pages/QuestionsList"
 import CreateQuestion from "./features/admin/pages/CreateQuestion"
 import QuizzesList from "./features/admin/pages/QuizzesList"
-//import CreateQuiz from "./features/admin/pages/CreateQuiz"
+import CreateQuiz from "./features/admin/pages/CreateQuiz"
 import QuizDetails from "./features/admin/pages/QuizDetails"
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
           <Route path="questions/create" element={<CreateQuestion />} />
           <Route path="quizzes" element={<QuizzesList />} />
           <Route path="quizzes/:publicId" element={<QuizDetails />} />
+          <Route path="quizzes/create" element={<CreateQuiz />} />
         </Route>
       </Route>
 

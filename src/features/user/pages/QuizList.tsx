@@ -2,14 +2,22 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
-import QuizCard from "../components/QuizCard"
+import { Button } from "@/components/ui/button"
 
+import QuizCard from "../components/QuizCard"
 import { getAllQuizzesForUserApi } from "../api/userApi"
 
 type Quiz = {
   publicId: string
   title: string
   totalQuestions: number
+}
+
+type Pagination = {
+  page: number
+  limit: number
+  total: number
+  totalPages: number
 }
 
 const colors = [
@@ -44,14 +52,19 @@ export default function QuizList() {
 
   const [quizzes, setQuizzes] = useState<Quiz[]>([])
   const [loading, setLoading] = useState(false)
+  const [page, setPage] = useState(1)
+  const [pagination, setPagination] = useState<Pagination | null>(null)
+
+  const limit = 6
 
   const fetchQuizzes = async () => {
     try {
       setLoading(true)
 
-      const response = await getAllQuizzesForUserApi()
+      const response = await getAllQuizzesForUserApi(page, limit)
 
       setQuizzes(response.data.data)
+      setPagination(response.data.pagination)
     } catch {
       toast.error("Failed to fetch quizzes")
     } finally {
@@ -61,7 +74,7 @@ export default function QuizList() {
 
   useEffect(() => {
     fetchQuizzes()
-  }, [])
+  }, [page])
 
   return (
     <div className="space-y-8">
@@ -85,6 +98,30 @@ export default function QuizList() {
           />
         ))}
       </div>
+
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex items-center justify-center gap-4">
+          <Button
+            variant="outline"
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            Previous
+          </Button>
+
+          <p className="text-sm text-muted-foreground">
+            Page {pagination.page} of {pagination.totalPages}
+          </p>
+
+          <Button
+            variant="outline"
+            disabled={page === pagination.totalPages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

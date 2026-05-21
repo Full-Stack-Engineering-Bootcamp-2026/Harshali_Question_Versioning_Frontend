@@ -13,6 +13,7 @@ import CreateQuiz from "./features/admin/pages/CreateQuiz"
 import QuizDetails from "./features/admin/pages/QuizDetails"
 import RegisterPage from "./features/shared/Register"
 import QuizList from "./features/user/pages/QuizList"
+import QuizAttempt from "./features/user/pages/AttemptQuiz"
 function App() {
   return (
     <Routes>
@@ -36,7 +37,10 @@ function App() {
       <Route element={<ProtectedRoute allowedRole="USER" />}>
         <Route path="/user" element={<AppLayout role="USER" />}>
           <Route index element={<div>User Dashboard</div>} />
+
           <Route path="quizzes" element={<QuizList />} />
+
+          <Route path="quizzes/:publicId" element={<QuizAttempt />} />
         </Route>
       </Route>
     </Routes>

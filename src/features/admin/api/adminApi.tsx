@@ -26,3 +26,17 @@ export const updateQuestionApi = (
 ) => {
   return API.patch(`/questions/${publicId}`, data)
 }
+
+export const getAllQuizzesApi = () => {
+  return API.get("/quiz")
+}
+
+export const createQuizApi = (data: {
+  title: string
+  questionPublicIds: string[]
+}) => {
+  return API.post("/quiz", data)
+}
+export const getQuizByPublicIdApi = (publicId: string) => {
+  return API.get(`/quiz/${publicId}`)
+}

@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useNavigate } from "react-router-dom"
 import { getAllQuestionsApi } from "../api/adminApi"
-
+import EditQuestionModal from "../components/EditQuestionModal"
 type Question = {
   publicId: string
   questionText: string
@@ -20,7 +20,10 @@ export default function QuestionsList() {
   const navigate = useNavigate()
   const [questions, setQuestions] = useState<Question[]>([])
   const [loading, setLoading] = useState(false)
-
+  const [editOpen, setEditOpen] = useState(false)
+  const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
+    null
+  )
   const fetchQuestions = async () => {
     try {
       setLoading(true)
@@ -89,7 +92,14 @@ export default function QuestionsList() {
                 )}
               </div>
 
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSelectedQuestion(question)
+                  setEditOpen(true)
+                }}
+              >
                 <Pencil className="mr-2 h-4 w-4" />
                 Edit
               </Button>
@@ -97,6 +107,12 @@ export default function QuestionsList() {
           </Card>
         ))}
       </div>
+      <EditQuestionModal
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        question={selectedQuestion}
+        onSuccess={fetchQuestions}
+      />
     </div>
   )
 }

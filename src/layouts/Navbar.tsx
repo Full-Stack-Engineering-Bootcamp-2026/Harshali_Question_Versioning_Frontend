@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { LogOut, UserCircle } from "lucide-react"
+import { UserCircle } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -51,7 +51,6 @@ export default function Navbar({ role }: NavbarProps) {
         </div>
 
         <Button variant="outline" size="sm" onClick={handleLogout}>
-          <LogOut className="mr-2 h-4 w-4" />
           Logout
         </Button>
       </div>

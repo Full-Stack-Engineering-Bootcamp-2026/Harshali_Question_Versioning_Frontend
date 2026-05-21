@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom"
 
 import LoginPage from "./features/shared/LoginPage"
-//import RegisterPage from "./features/shared/RegisterPage";
 
 import AppLayout from "./layouts/AppLayout"
 
 import ProtectedRoute from "./routes/ProtectedRoute"
 import PublicRoute from "./routes/PublicRoute"
-
+import QuestionsList from "./features/admin/pages/QuestionsList"
+import CreateQuestion from "./features/admin/pages/CreateQuestion"
 function App() {
   return (
     <Routes>
@@ -20,6 +20,9 @@ function App() {
       <Route element={<ProtectedRoute allowedRole="ADMIN" />}>
         <Route path="/admin" element={<AppLayout role="ADMIN" />}>
           <Route index element={<div>Admin Dashboard</div>} />
+
+          <Route path="questions" element={<QuestionsList />} />
+          <Route path="questions/create" element={<CreateQuestion />} />
         </Route>
       </Route>
 
